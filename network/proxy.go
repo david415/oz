@@ -98,10 +98,6 @@ func newProxyClient(pid int, config *ProxyConfig, log *logging.Logger, ready syn
 		lAddr = net.JoinHostPort("127.0.0.1", strconv.Itoa(config.Port))
 		rAddr = net.JoinHostPort(config.Destination, strconv.Itoa(config.Port))
 	} else {
-		if !strings.HasPrefix(config.Destination, "@") {
-			log.Warning("Only abstract unix socket are supported!")
-			return nil
-		}
 		lAddr = config.Destination
 		rAddr = config.Destination
 	}
@@ -181,10 +177,6 @@ func newProxyServer(pid int, config *ProxyConfig, log *logging.Logger, ready syn
 		lAddr = net.JoinHostPort(config.Destination, strconv.Itoa(config.Port))
 		rAddr = net.JoinHostPort("127.0.0.1", strconv.Itoa(config.Port))
 	} else {
-		if !strings.HasPrefix(config.Destination, "@") {
-			log.Warning("Only abstract unix socket are supported!")
-			return nil
-		}
 		lAddr = config.Destination
 		rAddr = config.Destination
 	}
