@@ -98,11 +98,11 @@ func newProxyClient(pid int, config *ProxyConfig, log *logging.Logger, ready syn
 		lAddr = net.JoinHostPort("127.0.0.1", strconv.Itoa(config.Port))
 		rAddr = net.JoinHostPort(config.Destination, strconv.Itoa(config.Port))
 	} else {
-		lAddr = config.Destination
+		lAddr = fmt.Sprintf("@%s", config.Destination)
 		rAddr = config.Destination
 	}
 
-	log.Info("Starting socket client forwarding: %s://%s.", config.Proto, rAddr)
+	log.Info("Starting socket client forwarding: %s://%s --> %s://%s.", config.Proto, lAddr, config.Proto, rAddr)
 
 	listen, err := proxySocketListener(pid, config.Proto, lAddr)
 	if err != nil {
